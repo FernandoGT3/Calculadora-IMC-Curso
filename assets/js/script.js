@@ -24,21 +24,52 @@ function main() {
             return;
         }
 
-        const message = `Seu IMC é ${peso} (${altura})`;
-        setResult(message);
+        const imc = getIMC(peso, altura);
+        const levelIMC = getLevelIMC(imc);
+
+        const message = `Seu IMC é ${imc} (${levelIMC})`;
+        setResult(message, true);
     });
 
+    function getIMC(peso, altura) {
+        const imc = peso / altura ** 2;
+        return imc.toFixed(2); //retornando com duas casas decimais
+    }
+
+    function getLevelIMC(imc) {
+        const level = ['Abaixo do Peso', 'Peso Normal', 'Sobrepeso', 'Obesidade Grau 1',
+            'Obesidade Grau 2', 'Obesidade Grau 3'];
+
+        if (imc > 39.9)
+            return level[5];
+        if (imc > 34.9)
+            return level[4];
+        if (imc > 29.9)
+            return level[3];
+        if (imc > 24.9)
+            return level[2];
+        if (imc >= 18.5)
+            return level[1];
+        if (imc < 18.5)
+            return level[0];
+    }
 
     function createParagraph() {
         const paragraph = document.createElement('p'); //criando um parágrafo
         return paragraph;
     }
 
-    function setResult(message) {
+    function setResult(message, isValid) {
         const result = document.querySelector('#resultado');
         result.innerHTML = '';
 
         const paragraph = createParagraph();
+
+        if (isValid) {
+            paragraph.classList.add('paragrafo-resultado-correto'); //adicionando uma classe
+        } else {
+            paragraph.classList.add('paragrafo-resultado-errado'); //adicionando uma classe
+        }
 
         paragraph.innerHTML = message;
         result.appendChild(paragraph); //inserindo   
