@@ -14,12 +14,36 @@ function main() {
 
         console.log(peso, altura);
 
-        const message = `${peso} e ${altura}`;
+        if (!peso) { //se for um NaN(false) ele será true e entrará na condição 
+            setResult('Peso Inválido', false);
+            return;
+        }
 
+        if (!altura) {
+            setResult('Altura Inválida', false);
+            return;
+        }
+
+        const message = `Seu IMC é ${peso} (${altura})`;
+        setResult(message);
+    });
+
+
+    function createParagraph() {
+        const paragraph = document.createElement('p'); //criando um parágrafo
+        return paragraph;
+    }
+
+    function setResult(message) {
         const result = document.querySelector('#resultado');
         result.innerHTML = '';
-        result.innerHTML = message;
-    });
+
+        const paragraph = createParagraph();
+
+        paragraph.innerHTML = message;
+        result.appendChild(paragraph); //inserindo   
+    }
+
 }
 
 main();
